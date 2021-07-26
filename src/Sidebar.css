@@ -47,3 +47,9 @@
   font-size: 24px !important;
 }
 /*.MuiSvgIcon-root는 material-ui에서 가져온 아이콘의 클래스네임이다.*/
+
+.sidebar__chats {
+  flex: 1;
+  background-color: white;
+  overflow: scroll; /*공간을 넘으면 스크롤로 변함*/
+}
