@@ -1,0 +1,33 @@
+.chat {
+  flex: 0.65;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat__header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.chat__headerInfo {
+  flex: 1;
+  padding-left: 20px;
+}
+.chat__headerInfo > h3 {
+  margin: 0px;
+  font-weight: 500;
+  /* 폰트 두께 */
+}
+
+.chat__headerInfo > p {
+  margin: 0px;
+  color: gray;
+}
+
+.chat__headerRight {
+  display: flex;
+  justify-content: space-between;
+  min-width: 100px;
+}

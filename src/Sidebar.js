@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Avatar, IconButton } from "@material-ui/core";
 import { Chat, MoreVert, DonutLarge, SearchOutlined } from "@material-ui/icons";
 import "./Sidebar.css";
