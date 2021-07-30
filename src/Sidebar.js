@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, IconButton } from "@material-ui/core";
-import { Chat, MoreVert, DonutLarge, SearchOutlined } from "@material-ui/icons";
+import {
+  Chat,
+  MoreVert,
+  DonutLarge,
+  SearchOutlined,
+  Unsubscribe,
+} from "@material-ui/icons";
 import "./Sidebar.css";
 import SidebarChat from "./SidebarChat";
 import db from "./firebase";
@@ -9,7 +15,7 @@ function Sidebar() {
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    db.collection("rooms").onSnapshot((snapshot) =>
+    const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
       setRooms(
         snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -17,6 +23,9 @@ function Sidebar() {
         }))
       )
     );
+    return () => {
+      unsubscribe(); //API나 네트워크를 끊어준다.
+    };
   }, []);
   return (
     <div className="sidebar">
