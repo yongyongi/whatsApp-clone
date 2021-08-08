@@ -1,0 +1,37 @@
+.login {
+  background-color: #f8f8f8;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+}
+
+.login__container {
+  text-align: center;
+  padding: 100px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 0px;
+}
+
+.login__container > img {
+  object-fit: contain;
+  /* object-fit은 <img>나 <video>요소의 콘텐츠 크기를 어떻게 조절 할지 설정한다.
+    contain은 가로세로비를 유지하면서 크기가 변경된다.
+  */
+  width: 100px;
+  margin-bottom: 40px;
+}
+
+.login__container > button {
+  margin-top: 50px;
+  text-transform: inherit !important;
+  /*none : 입력된 그대로 출력합니다.
+    capitalize : 단어의 첫번째 글자를 대문자로 바꿉니다.
+    uppercase : 모든 글자를 대문자로 바꿉니다.
+    lowercase : 모든 글자를 소문자로 바꿉니다.
+    initial : 기본값으로 설정합니다.
+    inherit : 부모 요소의 속성값을 상속받습니다.*/
+  background-color: #0a8d48 !important;
+  color: white;
+}
