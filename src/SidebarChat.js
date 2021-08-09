@@ -6,10 +6,23 @@ import { Link } from "react-router-dom";
 
 function SidebarChat({ addNewChat, id, name }) {
   const [seed, setSeed] = useState("");
+  const [message, setMessage] = useState("");
   useEffect(() => {
     setSeed(Math.random);
   }, []);
 
+  useEffect(() => {
+    if (id) {
+      db.collection("rooms")
+        .doc(id)
+        .collection("message")
+        .orderBy("timestamp", "desc")
+        .onSnapshot((snapshot) => {
+          // console.log(snapshot.docs[0].data());
+          setMessage(snapshot.docs.map((doc) => doc.data()));
+        });
+    }
+  }, []);
   const createChat = () => {
     const roomName = prompt("Please enter name for chat");
 
@@ -25,7 +38,7 @@ function SidebarChat({ addNewChat, id, name }) {
         <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
         <div className="sidebarChat__info">
           <h2>{name}</h2>
-          <p>Last message...</p>
+          <p>{message[0]?.message}</p>
         </div>
       </div>
     </Link>
