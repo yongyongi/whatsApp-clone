@@ -10,12 +10,16 @@ import {
 } from "@material-ui/icons";
 import { useParams } from "react-router-dom";
 import db from "./firebase";
+import { useStateValue } from "./StateProvider";
+import firebase from "firebase";
 
 function Chat() {
   const [input, setInput] = useState("");
   const [seed, setSeed] = useState("");
   const [roomName, setRoomName] = useState("");
   const { roomId } = useParams();
+  const [message, setMessage] = useState([]);
+  const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
     setSeed(Math.random());
@@ -26,12 +30,25 @@ function Chat() {
       db.collection("rooms")
         .doc(roomId)
         .onSnapshot((snapshot) => setRoomName(snapshot.data().name));
+
+      db.collection("rooms")
+        .doc(roomId)
+        .collection("message")
+        .orderBy("timestamp", "asc")
+        .onSnapshot((snapshot) =>
+          setMessage(snapshot.docs.map((doc) => doc.data()))
+        );
     }
   }, [roomId]);
 
   const sendMessage = (e) => {
     e.preventDefault();
-    console.log(">>>", input);
+    // console.log(">>>", input);
+    db.collection("rooms").doc(roomId).collection("message").add({
+      message: input,
+      name: user.displayName,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    });
     setInput("");
   };
   return (
@@ -55,11 +72,15 @@ function Chat() {
         </div>
       </div>
       <div className="chat__body">
-        <p className={`chat__message ${true && "chat__receiver"}`}>
-          <span className="chat__name">seungyong</span>
-          hey guys
-          <span className="chat__timestamp">10:00pm</span>
-        </p>
+        {message.map((msg) => (
+          <p className={`chat__message ${true && "chat__receiver"}`}>
+            <span className="chat__name">{msg.name}</span>
+            {msg.message}
+            <span className="chat__timestamp">
+              {new Date(msg.timestamp?.toDate()).toUTCString()}
+            </span>
+          </p>
+        ))}
       </div>
       <div className="chat__footer">
         <InsertEmoticon />
