@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 function SidebarChat({ addNewChat, id, name }) {
   const [seed, setSeed] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState([]);
   useEffect(() => {
     setSeed(Math.random);
   }, []);
@@ -18,11 +18,12 @@ function SidebarChat({ addNewChat, id, name }) {
         .collection("message")
         .orderBy("timestamp", "desc")
         .onSnapshot((snapshot) => {
-          // console.log(snapshot.docs[0].data());
+          // console.log(snapshot.docs[0].data);
           setMessage(snapshot.docs.map((doc) => doc.data()));
         });
     }
   }, []);
+  console.log(">>", message);
   const createChat = () => {
     const roomName = prompt("Please enter name for chat");
 

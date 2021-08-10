@@ -40,7 +40,8 @@ function Chat() {
         );
     }
   }, [roomId]);
-
+  // console.log(user.displayName);
+  // console.log(message);
   const sendMessage = (e) => {
     e.preventDefault();
     // console.log(">>>", input);
@@ -80,7 +81,7 @@ function Chat() {
         {message.map((msg) => (
           <p
             className={`chat__message ${
-              message.name === user.displayName && "chat__receiver"
+              msg.name === user.displayName && "chat__receiver"
             }`}
           >
             <span className="chat__name">{msg.name}</span>
